@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نمایش کاربران</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <style>
+        body {
+            background-color: #151515;
+            color: white;
+        }
+
+
+        table.dataTable {
+            background-color: #151515 !important;
+            color: white !important;
+        }
+        table.dataTable thead th {
+            color: white !important;
+            background-color: #151515 !important;
+        }
+        table.dataTable tbody td {
+            color: white !important;
+            background-color: #151515 !important;
+        }
+
+        table.dataTable tbody tr {
+            background-color: #151515 !important; 
+        }
+
+        table.dataTable tbody tr.odd,
+        table.dataTable tbody tr.even {
+            background-color: #151515 !important;
+        }
+
+        table.dataTable tbody tr.selected {
+            background-color: #444 !important; 
+            color: white !important;
+        }
+        
+        table.dataTable tbody tr:hover {
+            background-color: #333 !important;
+            color: white !important;
+        }
+
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+    <h1>لیست کاربران</h1>
+    <table id="users-table" class="display">
+        <thead>
+            <tr>
+                <th>شناسه چت</th>
+                <th>نام</th>
+                <th>سن</th>
+                <th>جنسیت</th>
+                <th>در حال چت با</th>
+                <th>حذف کاربر</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user[0] }}</td>
+                <td>{{ user[1] }}</td>
+                <td>{{ user[2] }}</td>
+                <td>{{ user[3] }}</td>
+                <td>{{ user[4] }}</td>
+                <td>
+                    <form action="/delete_user" method="POST">
+                        <input type="hidden" name="chat_id" value="{{ user[0] }}">
+                        <button type="submit">حذف</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        $(document).ready(function() {
+            $('#users-table').DataTable();
+        });
+    </script>
+</body>
+</html>
